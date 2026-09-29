@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertandingan Reaction Time: Math & Science Tingkatan 3</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        arena: {
+                            bg: '#0a0e17',
+                            card: '#121a29',
+                            border: '#1f2d45',
+                            accent: '#3b82f6',
+                            math: '#ec4899',
+                            science: '#10b981',
+                            gold: '#f59e0b'
+                        }
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 0.6s infinite',
+                        'bounce-short': 'bounceShort 0.3s ease-out',
+                        'shake': 'shake 0.4s ease-in-out',
+                        'glow-pulse': 'glowPulse 2s infinite',
+                        'pop-in': 'popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                    },
+                    keyframes: {
+                        bounceShort: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.06)' }
+                        },
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '20%, 60%': { transform: 'translateX(-10px)' },
+                            '40%, 80%': { transform: 'translateX(10px)' }
+                        },
+                        glowPulse: {
+                            '0%, 100%': { opacity: '0.4' },
+                            '50%': { opacity: '0.9' }
+                        },
+                        popIn: {
+                            '0%': { transform: 'scale(0.8)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #070b12;
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 90% 90%, rgba(236, 72, 153, 0.10) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.06) 0%, transparent 60%);
+            min-height: 100vh;
+        }
+
+        .arena-card {
+            background: rgba(18, 26, 41, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        .arena-btn {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .arena-btn:hover:not(:disabled) {
+            border-color: rgba(99, 102, 241, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+        }
+
+        .arena-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .streak-fire {
+            text-shadow: 0 0 12px rgba(249, 115, 22, 0.8), 0 0 24px rgba(239, 68, 68, 0.6);
+        }
+
+        /* Custom competition scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen justify-between items-center p-3 sm:p-6 select-none overflow-x-hidden">
+
+    <!-- Application Header -->
+    <header class="w-full max-w-4xl flex items-center justify-between mb-4 arena-card rounded-2xl px-5 py-3.5 shadow-2xl">
+        <div class="flex items-center space-x-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-pink-500 flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-indigo-500/30">
+                <i class="fa-solid fa-trophy text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-black text-base sm:text-lg tracking-tight text-white leading-none flex items-center gap-2">
+                    KSSM ARENA REAKSI
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 uppercase tracking-widest">T3</span>
+                </h1>
+                <p class="text-[11px] text-slate-400 font-semibold mt-1">Cabaran Kelajuan & Kefahaman Sains Math</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-2">
+            <!-- High Score Display -->
+            <div class="hidden sm:flex items-center px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs font-bold text-amber-400">
+                <i class="fa-solid fa-crown text-amber-400 mr-1.5"></i> Rekod: <span id="topScoreDisplay" class="font-mono text-white ml-1">0</span>
+            </div>
+
+            <!-- Mute / Sound Toggle Button -->
+            <button id="soundToggleBtn" onclick="toggleAudio()" class="w-10 h-10 rounded-xl arena-btn flex items-center justify-center text-emerald-400 hover:text-white" title="Bunyi Suara">
+                <i id="soundIcon" class="fa-solid fa-volume-high text-base"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Display Stage -->
+    <main class="w-full max-w-4xl flex-1 flex flex-col justify-center items-center relative">
+
+        <!-- 1. START ARENA SCREEN -->
+        <section id="startScreen" class="w-full arena-card rounded-3xl p-6 sm:p-10 text-center border border-slate-700/60 shadow-2xl animate-pop-in">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500/20 via-blue-500/20 to-pink-500/20 border border-indigo-500/30 mb-5 animate-bounce-short">
+                <i class="fa-solid fa-bolt-lightning text-4xl text-yellow-400"></i>
+            </div>
+
+            <h2 class="text-3xl sm:text-5xl font-black text-white mb-3 tracking-tight">
+                Kejuaraan Reaksi <br>
+                <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-pink-400 bg-clip-text text-transparent">Matematik & Sains T3</span>
+            </h2>
+
+            <p class="text-slate-300 max-w-xl mx-auto text-xs sm:text-sm mb-6 leading-relaxed">
+                Jawab 10 soalan KSSM Tingkatan 3 sepantas kilat! Masa reaksi diukur dalam <strong>milisaat (ms)</strong>.
+            </p>
+
+            <!-- Adaptive Difficulty Rules Banner -->
+            <div class="max-w-xl mx-auto mb-6 text-left bg-gradient-to-r from-slate-900/90 to-indigo-950/80 p-4 rounded-2xl border border-indigo-500/30">
+                <div class="flex items-start space-x-3">
+                    <i class="fa-solid fa-brain text-xl text-indigo-400 mt-0.5"></i>
+                    <div>
+                        <h4 class="text-xs font-black uppercase text-indigo-300 tracking-wider">Sistem Adaptif Automatik (Level 1 - 5)</h4>
+                        <p class="text-[11px] text-slate-300 mt-1 leading-normal">
+                            ⚡ <strong>Cepat & Betul:</strong> Soalan seterusnya menjadi <u>lebih mudah</u> (Lvl ↓).<br>
+                            ❌ <strong>Salah / Lambat:</strong> Soalan seterusnya menjadi <u>lebih mencabar</u> (Lvl ↑).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Mode Filter Selector -->
+            <div class="mb-8">
+                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Pilih Kategori Pertandingan</label>
+                <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
+                    <button onclick="setSubjectFilter('all')" id="modeBtnAll" class="subject-select-btn active-subject py-3 px-3 rounded-2xl text-xs font-bold border transition-all flex flex-col items-center gap-1.5 bg-blue-600/30 border-blue-500 text-white shadow-lg shadow-blue-500/20">
+                        <i class="fa-solid fa-layer-group text-base"></i>
+                        Campuran
+                    </button>
+                    <button onclick="setSubjectFilter('math')" id="modeBtnMath" class="subject-select-btn py-3 px-3 rounded-2xl text-xs font-bold border transition-all flex flex-col items-center gap-1.5 bg-slate-800/80 border-slate-700 text-slate-400 hover:border-pink-500/50 hover:text-pink-300">
+                        <i class="fa-solid fa-calculator text-base text-pink-400"></i>
+                        Matematik
+                    </button>
+                    <button onclick="setSubjectFilter('science')" id="modeBtnScience" class="subject-select-btn py-3 px-3 rounded-2xl text-xs font-bold border transition-all flex flex-col items-center gap-1.5 bg-slate-800/80 border-slate-700 text-slate-400 hover:border-emerald-500/50 hover:text-emerald-300">
+                        <i class="fa-solid fa-flask text-base text-emerald-400"></i>
+                        Sains
+                    </button>
+                </div>
+            </div>
+
+            <!-- Point Matrix Rules -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-8 text-left max-w-2xl mx-auto">
+                <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                    <span class="text-[10px] text-slate-400 block font-semibold">Masa &lt; 800 ms</span>
+                    <span class="text-xs font-black text-emerald-400">+20 Markah</span>
+                </div>
+                <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                    <span class="text-[10px] text-slate-400 block font-semibold">800 - 1500 ms</span>
+                    <span class="text-xs font-black text-blue-400">+12 Markah</span>
+                </div>
+                <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                    <span class="text-[10px] text-slate-400 block font-semibold">Masa &gt; 1500 ms</span>
+                    <span class="text-xs font-black text-amber-400">+6 Markah</span>
+                </div>
+                <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                    <span class="text-[10px] text-slate-400 block font-semibold">Jawapan Salah</span>
+                    <span class="text-xs font-black text-rose-400">-10 Markah</span>
+                </div>
+            </div>
+
+            <button onclick="startGame()" class="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-600 text-white font-black text-lg shadow-xl shadow-indigo-600/30 hover:scale-105 active:scale-95 transition-all cursor-pointer tracking-wide">
+                <i class="fa-solid fa-play mr-2"></i> MULA PERTANDINGAN
+            </button>
+        </section>
+
+        <!-- 2. COUNTDOWN STAGE -->
+        <section id="countdownScreen" class="hidden w-full arena-card rounded-3xl p-12 text-center my-auto flex flex-col items-center justify-center min-h-[360px]">
+            <p class="text-indigo-300 font-extrabold tracking-widest text-xs uppercase mb-4">Sediakan Minda & Jarimu...</p>
+            <div id="countdownNumber" class="text-9xl font-black bg-gradient-to-b from-white via-indigo-200 to-blue-500 bg-clip-text text-transparent animate-bounce">
+                3
+            </div>
+            <p class="text-xs text-slate-400 mt-6 font-medium">
+                <i class="fa-solid fa-bolt text-yellow-400 mr-1"></i> Sentuh / Tekan jawapan yang betul sebaik sahaja soalan tertera!
+            </p>
+        </section>
+
+        <!-- 3. GAMEPLAY ARENA SCREEN -->
+        <section id="gameScreen" class="hidden w-full flex flex-col gap-3.5 animate-pop-in">
+
+            <!-- Competition HUD Status Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                <!-- Round Progress -->
+                <div class="arena-card rounded-2xl p-3 flex flex-col justify-center">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider">Soalan</span>
+                        <span id="roundCounter" class="text-xs font-mono font-bold text-indigo-300">1 / 10</span>
+                    </div>
+                    <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                        <div id="progressBar" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-pink-500 h-2 rounded-full transition-all duration-300" style="width: 10%"></div>
+                    </div>
+                </div>
+
+                <!-- Current Score -->
+                <div class="arena-card rounded-2xl p-3 flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-trophy text-base"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Markah</span>
+                        <span id="scoreDisplay" class="text-base font-black font-mono text-white">0</span>
+                    </div>
+                </div>
+
+                <!-- Adaptive Level Indicator -->
+                <div class="arena-card rounded-2xl p-3 flex items-center space-x-3">
+                    <div id="levelBadgeIcon" class="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 font-extrabold font-mono text-xs border border-blue-500/30">
+                        L1
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Tahap Adaptif</span>
+                        <span id="levelDisplay" class="text-xs font-extrabold text-blue-300">Level 1 (Mudah)</span>
+                    </div>
+                </div>
+
+                <!-- Millisecond Reaction Timer -->
+                <div class="arena-card rounded-2xl p-3 flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-stopwatch text-base"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Reaksi Live</span>
+                        <span id="timerDisplay" class="text-base font-black font-mono text-pink-300">0 ms</span>
+                    </div>
+                </div>
+
+                <!-- Streak Flame Meter -->
+                <div class="arena-card rounded-2xl p-3 flex items-center space-x-3 col-span-2 sm:col-span-1">
+                    <div class="w-9 h-9 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-fire text-base"></i>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Streak</span>
+                        <span id="streakDisplay" class="text-base font-black font-mono text-orange-400 streak-fire">0 🔥</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Card Arena -->
+            <div class="arena-card rounded-3xl p-5 sm:p-8 shadow-2xl relative overflow-hidden border border-slate-700/60">
+                <!-- Question Top Meta Badges -->
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <span id="subjectBadge" class="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-pink-500/20 text-pink-300 border border-pink-500/30 flex items-center gap-1.5">
+                        <i class="fa-solid fa-calculator"></i> Matematik
+                    </span>
+                    <span id="topicBadge" class="text-xs text-slate-300 font-bold bg-slate-800/90 px-3.5 py-1 rounded-full border border-slate-700">
+                        Topik: Ungkapan Algebra
+                    </span>
+                </div>
+
+                <!-- Main Question Text Container -->
+                <div class="min-h-[100px] flex items-center justify-center my-2 px-2">
+                    <h3 id="questionText" class="text-lg sm:text-2xl font-black text-white text-center leading-relaxed">
+                        Memuatkan soalan...
+                    </h3>
+                </div>
+
+                <!-- 4 Options Grid -->
+                <div id="optionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+                    <!-- Dynamic Answer Choice Buttons -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FEEDBACK OVERLAY MODAL -->
+        <div id="feedbackModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+            <div id="feedbackContent" class="arena-card w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-700 text-center animate-bounce-short">
+                
+                <div id="feedbackIconContainer" class="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl mb-4 shadow-xl">
+                    <i id="feedbackIcon" class="fa-solid fa-check"></i>
+                </div>
+
+                <h3 id="feedbackTitle" class="text-3xl font-black mb-1">BETUL! 🎉</h3>
+                <p id="feedbackSubtitle" class="text-sm font-bold text-slate-300 mb-4">+20 Markah</p>
+
+                <!-- Key Metrics Card -->
+                <div class="grid grid-cols-2 gap-3 bg-slate-900/90 rounded-2xl p-3.5 mb-5 border border-slate-800">
+                    <div class="text-left">
+                        <span class="text-[10px] text-slate-400 font-bold block uppercase">Masa Reaksi</span>
+                        <span id="feedbackTime" class="text-lg font-black font-mono text-pink-400">450 ms</span>
+                    </div>
+                    <div class="text-left">
+                        <span class="text-[10px] text-slate-400 font-bold block uppercase">Larasan Level</span>
+                        <span id="feedbackAdaptiveShift" class="text-xs font-bold text-blue-300">Level ↓ (Soalan Mudah)</span>
+                    </div>
+                </div>
+
+                <!-- KSSM Educational Explanation Note -->
+                <div class="bg-indigo-950/50 border border-indigo-500/30 rounded-2xl p-4 text-left mb-6">
+                    <span class="text-[11px] font-black text-indigo-300 uppercase tracking-wider block mb-1">
+                        <i class="fa-solid fa-graduation-cap text-yellow-400 mr-1.5"></i> Penerangan Ringkas KSSM:
+                    </span>
+                    <p id="feedbackExplanation" class="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed">
+                        Penerangan tepat soalan di sini.
+                    </p>
+                </div>
+
+                <button onclick="nextQuestion()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-base shadow-lg shadow-indigo-600/30 hover:brightness-110 active:scale-98 transition-all cursor-pointer">
+                    SOALAN SETERUSNYA <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 5. GAME OVER SUMMARY SCREEN -->
+        <section id="gameOverScreen" class="hidden w-full arena-card rounded-3xl p-6 sm:p-10 shadow-2xl text-center border border-slate-700/60 animate-pop-in">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-pink-500 text-white font-black text-4xl shadow-xl shadow-amber-500/20 mb-4">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+
+            <h2 class="text-3xl sm:text-4xl font-black text-white mb-1">Keputusan Pertandingan</h2>
+            <p id="performanceTag" class="text-sm font-extrabold text-indigo-300 mb-6">"Pemandu Kilat KSSM - Reaksi Sangat Pantas!"</p>
+
+            <!-- Summary Stat Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800 text-left">
+                    <span class="text-[10px] text-slate-400 font-extrabold uppercase block">Jumlah Markah</span>
+                    <span id="finalScore" class="text-2xl font-black font-mono text-amber-400">0</span>
+                </div>
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800 text-left">
+                    <span class="text-[10px] text-slate-400 font-extrabold uppercase block">Purata Masa Reaksi</span>
+                    <span id="finalAvgTime" class="text-2xl font-black font-mono text-pink-400">0 ms</span>
+                </div>
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800 text-left">
+                    <span class="text-[10px] text-slate-400 font-extrabold uppercase block">Nisbah Betul / Salah</span>
+                    <span id="finalAccuracy" class="text-2xl font-black font-mono text-emerald-400">0 / 0</span>
+                </div>
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800 text-left">
+                    <span class="text-[10px] text-slate-400 font-extrabold uppercase block">Streak Tertinggi</span>
+                    <span id="finalBestStreak" class="text-2xl font-black font-mono text-orange-400">0 🔥</span>
+                </div>
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800 text-left col-span-2 sm:col-span-2">
+                    <span class="text-[10px] text-slate-400 font-extrabold uppercase block">Level Tertinggi Dicapai</span>
+                    <span id="finalHighestLevel" class="text-base font-black text-blue-300">Level 1 (Mudah)</span>
+                </div>
+            </div>
+
+            <!-- Review Questions History List -->
+            <div class="mb-6 text-left">
+                <h4 class="text-xs font-black uppercase text-slate-400 tracking-wider mb-2">Semakan Ringkas Pertandingan:</h4>
+                <div id="reviewList" class="max-h-48 overflow-y-auto space-y-2 pr-1">
+                    <!-- Dynamically populated review items -->
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <button onclick="restartGame()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-600 text-white font-black text-base shadow-xl shadow-indigo-600/30 hover:scale-105 active:scale-95 transition-all cursor-pointer">
+                    <i class="fa-solid fa-rotate-right mr-2"></i> MAIN SEMULA
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-6 text-center text-xs text-slate-500 font-medium">
+        <p>© 2026 Pertandingan Reaksi KSSM Tingkatan 3 • Dibina Khas Untuk Pembelajaran Interaktif</p>
+    </footer>
+
+    <script>
+        // Web Audio API Pure Browser Audio Synthesizer
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    audioCtx = new AudioContext();
+                }
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'tick') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(700, now);
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                    osc.start(now);
+                    osc.stop(now + 0.04);
+                } else if (type === 'correct') {
+                    // Ascending chime chord
+                    [523.25, 659.25, 783.99].forEach((freq, idx) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+                        gain.gain.setValueAtTime(0.12, now + idx * 0.06);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.25);
+                        osc.start(now + idx * 0.06);
+                        osc.stop(now + idx * 0.06 + 0.25);
+                    });
+                } else if (type === 'wrong') {
+                    // Dissonant low buzzer
+                    [220, 196].forEach((freq) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(freq, now);
+                        gain.gain.setValueAtTime(0.15, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                        osc.start(now);
+                        osc.stop(now + 0.3);
+                    });
+                } else if (type === 'streak') {
+                    // Victory harmonic fan-fare
+                    [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+                        gain.gain.setValueAtTime(0.12, now + idx * 0.05);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.3);
+                        osc.start(now + idx * 0.05);
+                        osc.stop(now + idx * 0.05 + 0.3);
+                    });
+                } else if (type === 'fanfare') {
+                    // Game Over Fanfare
+                    const notes = [440, 554.37, 659.25, 880];
+                    notes.forEach((freq, idx) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+                        gain.gain.setValueAtTime(0.15, now + idx * 0.12);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.4);
+                        osc.start(now + idx * 0.12);
+                        osc.stop(now + idx * 0.12 + 0.4);
+                    });
+                }
+            } catch(e) {
+                console.log("Audio Error", e);
+            }
+        }
+
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            const soundIcon = document.getElementById('soundIcon');
+            if (soundEnabled) {
+                soundIcon.className = "fa-solid fa-volume-high text-base text-emerald-400";
+            } else {
+                soundIcon.className = "fa-solid fa-volume-xmark text-base text-slate-500";
+            }
+        }
+
+        // Comprehensive Question Database (50 Questions total across levels 1 to 5)
+        const questionBank = [
+            // ==================== MATEMATIK TINGKATAN 3 (25 Soalan) ====================
+            // Level 1 (Sangat Mudah)
+            {
+                subject: 'math',
+                topic: 'Indeks',
+                level: 1,
+                question: 'Permudahkan: 3⁴ × 3²',
+                options: ['3⁶', '3⁸', '9⁶', '3²'],
+                answer: 0,
+                explanation: 'Hukum Indeks: aᵐ × aⁿ = aᵐ⁺ⁿ. Maka 3⁴⁺² = 3⁶.'
+            },
+            {
+                subject: 'math',
+                topic: 'Teorem Pythagoras',
+                level: 1,
+                question: 'Segi tiga bersudut tegak mempunyai sisi 6 cm dan 8 cm. Berapakah panjang hipotenus?',
+                options: ['10 cm', '12 cm', '14 cm', '100 cm'],
+                answer: 0,
+                explanation: 'Hipotenus c = √(6² + 8²) = √(36 + 64) = √100 = 10 cm.'
+            },
+            {
+                subject: 'math',
+                topic: 'Bentuk Piawai',
+                level: 1,
+                question: 'Tuliskan 72000 dalam bentuk piawai.',
+                options: ['7.2 × 10⁴', '72 × 10³', '0.72 × 10⁵', '7.2 × 10⁻⁴'],
+                answer: 0,
+                explanation: 'Bentuk piawai A × 10ⁿ di mana 1 ≤ A < 10. 72000 = 7.2 × 10⁴.'
+            },
+            {
+                subject: 'math',
+                topic: 'Ungkapan Algebra',
+                level: 1,
+                question: 'Kembangkan: 4(2x - 3)',
+                options: ['8x - 12', '8x - 3', '4x - 12', '8x + 12'],
+                answer: 0,
+                explanation: '4 × 2x - 4 × 3 = 8x - 12.'
+            },
+            {
+                subject: 'math',
+                topic: 'Nisbah dan Kadaran',
+                level: 1,
+                question: 'Jika x : y = 3 : 5 dan x = 12, berapakah nilai y?',
+                options: ['20', '15', '25', '18'],
+                answer: 0,
+                explanation: '1 bahagian = 12 ÷ 3 = 4. Maka y = 5 × 4 = 20.'
+            },
+
+            // Level 2 (Mudah)
+            {
+                subject: 'math',
+                topic: 'Indeks',
+                level: 2,
+                question: 'Nilaikan: (5²)³',
+                options: ['5⁶', '5⁵', '25³', '5⁸'],
+                answer: 0,
+                explanation: '(aᵐ)ⁿ = aᵐˣⁿ. Maka (5²)³ = 5⁶.'
+            },
+            {
+                subject: 'math',
+                topic: 'Persamaan Linear',
+                level: 2,
+                question: 'Selesaikan: 3x - 7 = 14',
+                options: ['x = 7', 'x = 5', 'x = 21', 'x = 3'],
+                answer: 0,
+                explanation: '3x = 14 + 7 ➔ 3x = 21 ➔ x = 7.'
+            },
+            {
+                subject: 'math',
+                topic: 'Matematik Pengguna',
+                level: 2,
+                question: 'Simpanan RM2000 dengan kadar faedah mudah 4% setahun. Berapakah faedah untuk 1 tahun?',
+                options: ['RM 80', 'RM 800', 'RM 40', 'RM 8'],
+                answer: 0,
+                explanation: 'Faedah I = P × r × t = 2000 × (4/100) × 1 = RM 80.'
+            },
+            {
+                subject: 'math',
+                topic: 'Nisbah Trigonometri',
+                level: 2,
+                question: 'Dalam segi tiga bersudut tegak, kos θ dikira sebagai:',
+                options: ['Sisi Bersebelahan / Hipotenus', 'Sisi Bertentangan / Hipotenus', 'Sisi Bertentangan / Sisi Bersebelahan', 'Hipotenus / Sisi Bersebelahan'],
+                answer: 0,
+                explanation: 'kos θ = Sisi Bersebelahan / Hipotenus (CAH).'
+            },
+            {
+                subject: 'math',
+                topic: 'Ungkapan Algebra',
+                level: 2,
+                question: 'Faktorkan: y² - 16',
+                options: ['(y - 4)(y + 4)', '(y - 4)²', '(y + 4)²', 'y(y - 16)'],
+                answer: 0,
+                explanation: 'Beza dua kuasa dua sempurna: a² - b² = (a - b)(a + b).'
+            },
+
+            // Level 3 (Sederhana)
+            {
+                subject: 'math',
+                topic: 'Indeks',
+                level: 3,
+                question: 'Nilaikan: 27^(2/3)',
+                options: ['9', '3', '18', '27'],
+                answer: 0,
+                explanation: '27^(2/3) = (∛27)² = (3)² = 9.'
+            },
+            {
+                subject: 'math',
+                topic: 'Sudut Bulatan',
+                level: 3,
+                question: 'Sudut dalam semibulatan yang mencangkup diameter sentiasa bernilai:',
+                options: ['90°', '180°', '45°', '60°'],
+                answer: 0,
+                explanation: 'Ciri geometri bulatan: Sudut pada lilitan dalam semibulatan ialah sudut tegak (90°).'
+            },
+            {
+                subject: 'math',
+                topic: 'Lukisan Berskala',
+                level: 3,
+                question: 'Skala ialah 1 : 200. Jika panjang objek pada lukisan ialah 5 cm, cari panjang sebenar.',
+                options: ['10 m', '100 cm', '1 m', '20 m'],
+                answer: 0,
+                explanation: 'Panjang sebenar = 5 cm × 200 = 1000 cm = 10 meter.'
+            },
+            {
+                subject: 'math',
+                topic: 'Garis Lurus',
+                level: 3,
+                question: 'Cari kecerunan bagi garis lurus 2y = 6x + 8.',
+                options: ['3', '6', '8', '4'],
+                answer: 0,
+                explanation: 'Bahagi semua dengan 2 ➔ y = 3x + 4. Maka kecerunan m = 3.'
+            },
+            {
+                subject: 'math',
+                topic: 'Nisbah Trigonometri',
+                level: 3,
+                question: 'Jika tan θ = 1, apakah nilai θ bagi 0° ≤ θ ≤ 90°?',
+                options: ['45°', '30°', '60°', '90°'],
+                answer: 0,
+                explanation: 'tan 45° = 1 (sisi bertentangan = sisi bersebelahan).'
+            },
+
+            // Level 4 (Mencabar)
+            {
+                subject: 'math',
+                topic: 'Persamaan Linear Serentak',
+                level: 4,
+                question: 'Selesaikan serentak: 2x + y = 10 dan x - y = 2.',
+                options: ['x = 4, y = 2', 'x = 3, y = 4', 'x = 5, y = 0', 'x = 6, y = -2'],
+                answer: 0,
+                explanation: 'Tambah kedua-dua persamaan: 3x = 12 ➔ x = 4. Maka 4 - y = 2 ➔ y = 2.'
+            },
+            {
+                subject: 'math',
+                topic: 'Bentuk Piawai',
+                level: 4,
+                question: 'Nilaikan: (3 × 10⁵) × (4 × 10⁴)',
+                options: ['1.2 × 10¹⁰', '12 × 10⁹', '1.2 × 10⁹', '7 × 10⁹'],
+                answer: 0,
+                explanation: '(3 × 4) × 10⁵⁺⁴ = 12 × 10⁹ = 1.2 × 10¹⁰.'
+            },
+            {
+                subject: 'math',
+                topic: 'Pelan dan Dongakan',
+                level: 4,
+                question: 'Unjuran ortogon suatu objek pada satah mencanak dari arah hadapan dinamakan:',
+                options: ['Dongakan Depan', 'Pelan', 'Dongakan Sisi', 'Unjuran Melintang'],
+                answer: 0,
+                explanation: 'Pandangan dari arah hadapan pada satah mencanak dinamakan Dongakan Depan.'
+            },
+            {
+                subject: 'math',
+                topic: 'Matematik Pengguna',
+                level: 4,
+                question: 'Apakah rumus Kadar Pulangan Pelaburan (ROI)?',
+                options: ['(Jumlah Pulangan / Nilai Pelaburan Awal) × 100%', '(Pelaburan Awal / Jumlah Pulangan) × 100%', 'Jumlah Keuntungan × Kadar Faedah', 'Pelaburan Awal - Keuntungan'],
+                answer: 0,
+                explanation: 'ROI (%) = (Jumlah Pulangan / Nilai Pelaburan Awal) × 100%.'
+            },
+            {
+                subject: 'math',
+                topic: 'Lokus dalam 2D',
+                level: 4,
+                question: 'Lokus bagi titik yang sentiasa berjarak sama dari dua garis selari AB dan CD ialah:',
+                options: ['Garis selari yang berada di tengah-tengah AB dan CD', 'Pembahagi dua sama serenjang', 'Bulatan', 'Garis bersilang'],
+                answer: 0,
+                explanation: 'Lokus titik berjarak sama dari dua garis selari ialah satu garis selari di tengah-tengahnya.'
+            },
+
+            // Level 5 (Sangat Mencabar)
+            {
+                subject: 'math',
+                topic: 'Indeks Persamaan',
+                level: 5,
+                question: 'Selesaikan persamaan: 2^(2x+1) = 32',
+                options: ['x = 2', 'x = 3', 'x = 1.5', 'x = 4'],
+                answer: 0,
+                explanation: '32 = 2⁵. Maka 2^(2x+1) = 2⁵ ➔ 2x + 1 = 5 ➔ 2x = 4 ➔ x = 2.'
+            },
+            {
+                subject: 'math',
+                topic: 'Garis Lurus',
+                level: 5,
+                question: 'Cari pintasan-x bagi garis lurus 3x + 4y = 12.',
+                options: ['4', '3', '12', '-4'],
+                answer: 0,
+                explanation: 'Pada pintasan-x, y = 0. Maka 3x + 0 = 12 ➔ x = 4.'
+            },
+            {
+                subject: 'math',
+                topic: 'Tangen Bulatan',
+                level: 5,
+                question: 'Sudut di antara tangen bulatan dan jejari pada titik sentuhan ialah:',
+                options: ['90°', '180°', '45°', '60°'],
+                answer: 0,
+                explanation: 'Tangen bulatan sentiasa bersudut tegak (90°) dengan jejari pada titik sentuhan.'
+            },
+            {
+                subject: 'math',
+                topic: 'Nisbah Trigonometri',
+                level: 5,
+                question: 'Dalam segi tiga bersudut tegak, jika sin θ = 3/5, apakah nilai tan θ?',
+                options: ['3/4', '4/3', '4/5', '5/3'],
+                answer: 0,
+                explanation: 'Bertentangan = 3, Hipotenus = 5. Guna Pythagoras, Bersebelahan = √(5² - 3²) = 4. Maka tan θ = 3/4.'
+            },
+            {
+                subject: 'math',
+                topic: 'Ungkapan Algebra Complex',
+                level: 5,
+                question: 'Permudahkan: (x² - 9) / (x - 3)',
+                options: ['x + 3', 'x - 3', 'x + 9', '3x'],
+                answer: 0,
+                explanation: '(x² - 9) = (x - 3)(x + 3). Bahagi dengan (x - 3) menghasilkan (x + 3).'
+            },
+
+            // ==================== SAINS TINGKATAN 3 (25 Soalan) ====================
+            // Level 1 (Sangat Mudah)
+            {
+                subject: 'science',
+                topic: 'Rangsangan dan Gerak Balas',
+                level: 1,
+                question: 'Organ deria manakah yang mengandungi fotoreseptor untuk mengesan cahaya?',
+                options: ['Mata', 'Telinga', 'Kulit', 'Hidung'],
+                answer: 0,
+                explanation: 'Retina dalam mata mengandungi sel rod dan kon (fotoreseptor).'
+            },
+            {
+                subject: 'science',
+                topic: 'Respirasi',
+                level: 1,
+                question: 'Gas manakah yang diserap oleh kapilari darah di alveolus semasa tarikan nafas?',
+                options: ['Oksigen', 'Karbon Dioksida', 'Nitrogen', 'Argon'],
+                answer: 0,
+                explanation: 'Peparu meresap masuk gas Oksigen ke dalam sistem peredaran darah.'
+            },
+            {
+                subject: 'science',
+                topic: 'Pengangkutan',
+                level: 1,
+                question: 'Organ manakah yang berfungsi mengepam darah ke seluruh tubuh manusia?',
+                options: ['Jantung', 'Peparu', 'Hati', 'Buah Pinggang'],
+                answer: 0,
+                explanation: 'Jantung ialah organ berotot yang mengepam darah secara berterusan.'
+            },
+            {
+                subject: 'science',
+                topic: 'Jadual Berkala',
+                level: 1,
+                question: 'Apakah unit paling asas bagi sesuatu unsur kimia?',
+                options: ['Atom', 'Molekul', 'Sel', 'Sebatian'],
+                answer: 0,
+                explanation: 'Atom ialah zarah terkecil yang tidak boleh dibahagikan secara kimia biasa.'
+            },
+            {
+                subject: 'science',
+                topic: 'Tenaga Elektrik',
+                level: 1,
+                question: 'Unit SI bagi pengukuran Arus Elektrik ialah:',
+                options: ['Ampere (A)', 'Volt (V)', 'Ohm (Ω)', 'Watt (W)'],
+                answer: 0,
+                explanation: 'Arus elektrik diukur dalam Ampere (A).'
+            },
+
+            // Level 2 (Mudah)
+            {
+                subject: 'science',
+                topic: 'Respirasi',
+                level: 2,
+                question: 'Struktur berbentuk kantung nipis di peparu di mana pertukaran gas berlaku ialah:',
+                options: ['Alveolus', 'Bronkus', 'Trakea', 'Diafragma'],
+                answer: 0,
+                explanation: 'Alveolus menyediakan luas permukaan besar dan nipis untuk resapan gas.'
+            },
+            {
+                subject: 'science',
+                topic: 'Pengangkutan Tumbuhan',
+                level: 2,
+                question: 'Tisu tumbuhan yang mengangkut air dan garam mineral dari akar ke daun ialah:',
+                options: ['Xilem', 'Floem', 'Stoma', 'Kutikel'],
+                answer: 0,
+                explanation: 'Xilem mengangkut air & mineral, manakala Floem mengangkut makanan (glukosa).'
+            },
+            {
+                subject: 'science',
+                topic: 'Termokimia',
+                level: 2,
+                question: 'Tindak balas kimia yang MELEPASKAN haba ke persekitaran dinamakan:',
+                options: ['Eksotermik', 'Endotermik', 'Peneutralan', 'Fizikal'],
+                answer: 0,
+                explanation: 'Tindak balas eksotermik membebaskan haba (suhu persekitaran meningkat).'
+            },
+            {
+                subject: 'science',
+                topic: 'Kereaktifan Logam',
+                level: 2,
+                question: 'Gas apakah yang dibebaskan apabila logam reaktif bertindak balas dengan asid cair?',
+                options: ['Hidrogen', 'Oksigen', 'Karbon Dioksida', 'Nitrogen'],
+                answer: 0,
+                explanation: 'Logam + Asid cair ➔ Garam + Gas Hidrogen.'
+            },
+            {
+                subject: 'science',
+                topic: 'Sokongan Haiwan',
+                level: 2,
+                question: 'Haiwan tidak bertulang belakang seperti cacing tanah mempunyai sokongan jenis:',
+                options: ['Rangka Hidrostatik', 'Rangka Luar', 'Rangka Dalam', 'Rangka Berotot'],
+                answer: 0,
+                explanation: 'Cacing menggunakan tekanan cecair badan (rangka hidrostatik).'
+            },
+
+            // Level 3 (Sederhana)
+            {
+                subject: 'science',
+                topic: 'Pengangkutan Darah',
+                level: 3,
+                question: 'Saluran darah utama yang membawa darah beroksigen keluar dari jantung ke seluruh badan ialah:',
+                options: ['Aorta', 'Vena Kava', 'Arteri Pulmonari', 'Vena Pulmonari'],
+                answer: 0,
+                explanation: 'Aorta ialah arteri terbesar yang mengalirkan darah beroksigen dari ventrikel kiri.'
+            },
+            {
+                subject: 'science',
+                topic: 'Keradioaktifan',
+                level: 3,
+                question: 'Sinaran radioaktif yang mempunyai kuasa penembusan paling TINGGI ialah:',
+                options: ['Sinar Gama', 'Sinar Alfa', 'Sinar Beta', 'Sinar-X'],
+                answer: 0,
+                explanation: 'Sinar Gama mempunyai kuasa penembusan tertinggi dan hanya terhalang oleh plumbum tebal.'
+            },
+            {
+                subject: 'science',
+                topic: 'Tenaga Elektrik',
+                level: 3,
+                question: 'Hukum yang menyatakan hubungan Voltan, Arus dan Rintangan (V = I × R) ialah:',
+                options: ['Hukum Ohm', 'Hukum Faraday', 'Hukum Newton', 'Hukum Joule'],
+                answer: 0,
+                explanation: 'Hukum Ohm menceritakan V = I × R.'
+            },
+            {
+                subject: 'science',
+                topic: 'Rangsangan Tumbuhan',
+                level: 3,
+                question: 'Gerak balas pucuk tumbuhan membengkok ke arah cahaya dinamakan:',
+                options: ['Fototropisme Positif', 'Geotropisme Positif', 'Hidrotropisme Negatif', 'Tigmotropisme'],
+                answer: 0,
+                explanation: 'Fototropisme positif ialah gerak balas tumbuh ke arah sumber cahaya.'
+            },
+            {
+                subject: 'science',
+                topic: 'Termokimia',
+                level: 3,
+                question: 'Fotosintesis dalam tumbuhan hijau merupakan contoh tindak balas:',
+                options: ['Endotermik', 'Eksotermik', 'Pembakaran', 'Pengoksidaan'],
+                answer: 0,
+                explanation: 'Fotosintesis menyerap tenaga cahaya/haba dari persekitaran (Endotermik).'
+            },
+
+            // Level 4 (Mencabar)
+            {
+                subject: 'science',
+                topic: 'Tenaga Elektrik',
+                level: 4,
+                question: 'Sebuah cerek 240V, 1200W digunakan. Berapakah arus elektrik yang mengalir?',
+                options: ['5 A', '0.2 A', '288 A', '2 A'],
+                answer: 0,
+                explanation: 'Kuasa P = V × I ➔ I = P / V = 1200 / 240 = 5 Ampere.'
+            },
+            {
+                subject: 'science',
+                topic: 'Kereaktifan Logam',
+                level: 4,
+                question: 'Dalam siri kereaktifan, logam manakah yang boleh diekstrak dengan memanaskan bijihnya bersama Karbon?',
+                options: ['Besi (Iron)', 'Kalium', 'Natrium', 'Kalsium'],
+                answer: 0,
+                explanation: 'Karbon lebih reaktif daripada Besi, Zink dan Timah, maka Karbon boleh penurunan bijih tersebut.'
+            },
+            {
+                subject: 'science',
+                topic: 'Sains Angkasa',
+                level: 4,
+                question: 'Pelepasan zarah bercas tinggi secara berterusan dari Korona Matahari dinamakan:',
+                options: ['Angin Suria', 'Lubang Hitam', 'Supernova', 'Aura Suria'],
+                answer: 0,
+                explanation: 'Angin suria terdiri daripada zarah bercas (plasma) yang dipancarkan dari Matahari.'
+            },
+            {
+                subject: 'science',
+                topic: 'Sistem Peredaran',
+                level: 4,
+                question: 'Apakah nama injap yang terletak di antara Atrium Kanan dan Ventrikel Kanan jantung?',
+                options: ['Injap Trikuspid', 'Injap Bikuspid', 'Injap Sabit', 'Injap Aorta'],
+                answer: 0,
+                explanation: 'Injap Trikuspid mengawal aliran darah satu arah di sebelah kanan jantung.'
+            },
+            {
+                subject: 'science',
+                topic: 'Keradioaktifan',
+                level: 4,
+                question: 'Masa separuh hayat Isotop P ialah 3 hari. Berapakah baki sampel 40g selepas 9 hari?',
+                options: ['5 g', '10 g', '20 g', '2.5 g'],
+                answer: 0,
+                explanation: '9 hari = 3 separuh hayat (9 ÷ 3 = 3). 40g ➔ 20g ➔ 10g ➔ 5g.'
+            },
+
+            // Level 5 (Sangat Mencabar)
+            {
+                subject: 'science',
+                topic: 'Litar Elektrik Selari',
+                level: 5,
+                question: 'Dua perintang 6 Ω dan 6 Ω disambungkan secara SELARI. Berapakah rintangan berkesan?',
+                options: ['3 Ω', '12 Ω', '1 Ω', '36 Ω'],
+                answer: 0,
+                explanation: 'Litar selari: 1/R = 1/6 + 1/6 = 2/6 = 1/3 ➔ R = 3 Ω.'
+            },
+            {
+                subject: 'science',
+                topic: 'Transpirasi',
+                level: 5,
+                question: 'Faktor manakah yang akan MENURUNKAN kadar transpirasi tumbuhan?',
+                options: ['Kelembapan udara yang tinggi', 'Suhu yang tinggi', 'Kelajuan angin tinggi', 'Keamatan cahaya tinggi'],
+                answer: 0,
+                explanation: 'Kelembapan udara tinggi mengurangkan kecerunan keamatan wap air, memperlahankan sejatan.'
+            },
+            {
+                subject: 'science',
+                topic: 'Sistem Saraf',
+                level: 5,
+                question: 'Laluan impuls yang betul dalam Tindakan Refleks (Arka Refleks) ialah:',
+                options: ['Reseptor ➔ Saraf Deria ➔ Saraf Tunjang ➔ Saraf Motor ➔ Efektor', 'Reseptor ➔ Otak ➔ Saraf Motor ➔ Efektor', 'Efektor ➔ Saraf Deria ➔ Otak ➔ Reseptor', 'Saraf Motor ➔ Saraf Tunjang ➔ Reseptor'],
+                answer: 0,
+                explanation: 'Tindakan refleks dipintasi secara pantas oleh Saraf Tunjang tanpa pemikiran sedar otak.'
+            },
+            {
+                subject: 'science',
+                topic: 'Keradioaktifan Aplikasi',
+                level: 5,
+                question: 'Isotop radioaktif manakah yang digunakan untuk menentukan umur bahan purba (pencatatan usia)?',
+                options: ['Karbon-14', 'Fosforus-32', 'Kobalt-60', 'Iodin-131'],
+                answer: 0,
+                explanation: 'Karbon-14 digunakan dalam pentarikhan karbon untuk menganggarkan usia bahan organik purba.'
+            },
+            {
+                subject: 'science',
+                topic: 'Transformator',
+                level: 5,
+                question: 'Ciri utama bagi Transformator Injak Naik (Step-up Transformer) ialah:',
+                options: ['Bilangan lilitan sekunder LEBIH BANYAK daripada lilitan primer', 'Voltan keluaran lebih rendah daripada masukan', 'Bilangan lilitan sekunder kurang', 'Arus sekunder lebih tinggi'],
+                answer: 0,
+                explanation: 'Transformator injak naik meningkatkan voltan dengan bilangan lilitan sekunder Nₛ > Nₚ.'
+            }
+        ];
+
+        // Arena Game State
+        let currentSubjectFilter = 'all'; // 'all', 'math', 'science'
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let currentLevel = 1; // 1 (Easy) to 5 (Hardest)
+        let streak = 0;
+        let maxStreak = 0;
+        let highestLevelReached = 1;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let totalReactionTime = 0;
+
+        let roundQuestions = [];
+        let currentQuestion = null;
+        let startTime = 0;
+        let timerInterval = null;
+        let elapsedMs = 0;
+
+        // Initialize High Score on Load
+        window.onload = function() {
+            const savedTopScore = localStorage.getItem('kssm_reaction_topscore') || 0;
+            document.getElementById('topScoreDisplay').textContent = savedTopScore;
+        };
+
+        // Shuffle utility
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function setSubjectFilter(mode) {
+            currentSubjectFilter = mode;
+            document.querySelectorAll('.subject-select-btn').forEach(btn => {
+                btn.className = "subject-select-btn py-3 px-3 rounded-2xl text-xs font-bold border transition-all flex flex-col items-center gap-1.5 bg-slate-800/80 border-slate-700 text-slate-400 hover:text-white";
+            });
+
+            if (mode === 'all') {
+                document.getElementById('modeBtnAll').className = "subject-select-btn py-3 px-3 rounded-2xl text-xs font-bold border transition-all flex flex-col items-center gap-1.5 bg-blue-600/30 border-blue-500 text-white shadow-lg shadow-blue-500/20";
+            } else if (mode === 'math') {
+                document.getElementById('modeBtnMath').className = "subject-select-btn py-3 px-3 rounded-2xl text-xs font-bold border transition-all flex flex-col items-center gap-1.5 bg-pink-600/30 border-pink-500 text-white shadow-lg shadow-pink-500/20";
+            } else if (mode === 'science') {
+                document.getElementById('modeBtnScience').className = "subject-select-btn py-3 px-3 rounded-2xl text-xs font-bold border transition-all flex flex-col items-center gap-1.5 bg-emerald-600/30 border-emerald-500 text-white shadow-lg shadow-emerald-500/20";
+            }
+            playSound('tick');
+        }
+
+        function startGame() {
+            initAudio();
+            playSound('tick');
+
+            score = 0;
+            currentLevel = 1;
+            streak = 0;
+            maxStreak = 0;
+            highestLevelReached = 1;
+            correctCount = 0;
+            wrongCount = 0;
+            totalReactionTime = 0;
+            currentQuestionIndex = 0;
+            roundQuestions = [];
+
+            // Switch Screen
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameOverScreen').classList.add('hidden');
+            document.getElementById('countdownScreen').classList.remove('hidden');
+
+            // Start 3, 2, 1 Countdown
+            let count = 3;
+            const countEl = document.getElementById('countdownNumber');
+            countEl.textContent = count;
+            playSound('tick');
+
+            const countdownTimer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countEl.textContent = count;
+                    playSound('tick');
+                } else {
+                    clearInterval(countdownTimer);
+                    document.getElementById('countdownScreen').classList.add('hidden');
+                    document.getElementById('gameScreen').classList.remove('hidden');
+                    loadNextQuestion();
+                }
+            }, 750);
+        }
+
+        function getQuestionForLevel(targetLevel) {
+            let filtered = questionBank.filter(q => {
+                if (currentSubjectFilter === 'all') return true;
+                return q.subject === currentSubjectFilter;
+            });
+
+            let available = filtered.filter(q => !roundQuestions.includes(q));
+
+            if (available.length === 0) {
+                available = filtered;
+            }
+
+            let exactMatch = available.filter(q => q.level === targetLevel);
+            if (exactMatch.length > 0) {
+                return exactMatch[Math.floor(Math.random() * exactMatch.length)];
+            }
+
+            available.sort((a, b) => Math.abs(a.level - targetLevel) - Math.abs(b.level - targetLevel));
+            return available[0];
+        }
+
+        function loadNextQuestion() {
+            if (currentQuestionIndex >= 10) {
+                endGame();
+                return;
+            }
+
+            currentQuestion = getQuestionForLevel(currentLevel);
+            roundQuestions.push(currentQuestion);
+
+            // Update Competition HUD
+            document.getElementById('roundCounter').textContent = `${currentQuestionIndex + 1} / 10`;
+            document.getElementById('progressBar').style.width = `${((currentQuestionIndex + 1) / 10) * 100}%`;
+            document.getElementById('scoreDisplay').textContent = score;
+            document.getElementById('streakDisplay').textContent = `${streak} 🔥`;
+
+            const levelNames = ['Level 1 (Mudah)', 'Level 2 (Sederhana)', 'Level 3 (Pertengahan)', 'Level 4 (Mencabar)', 'Level 5 (Sangat Mencabar)'];
+            document.getElementById('levelDisplay').textContent = levelNames[currentLevel - 1];
+            document.getElementById('levelBadgeIcon').textContent = `L${currentLevel}`;
+
+            const subBadge = document.getElementById('subjectBadge');
+            if (currentQuestion.subject === 'math') {
+                subBadge.className = "px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-pink-500/20 text-pink-300 border border-pink-500/30 flex items-center gap-1.5";
+                subBadge.innerHTML = `<i class="fa-solid fa-calculator"></i> Matematik`;
+            } else {
+                subBadge.className = "px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5";
+                subBadge.innerHTML = `<i class="fa-solid fa-flask"></i> Sains`;
+            }
+
+            document.getElementById('topicBadge').textContent = `Topik: ${currentQuestion.topic}`;
+            document.getElementById('questionText').textContent = currentQuestion.question;
+
+            // Generate randomized options
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+
+            const originalOptions = currentQuestion.options;
+            const correctAnswerText = originalOptions[currentQuestion.answer];
+            const shuffledOptions = shuffleArray(originalOptions);
+
+            shuffledOptions.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = "arena-btn p-4 rounded-2xl text-left text-sm font-bold text-white flex items-center justify-between group transition-all cursor-pointer";
+                
+                const labelLetter = String.fromCharCode(65 + index); // A, B, C, D
+                
+                btn.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-indigo-300 font-mono font-black flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            ${labelLetter}
+                        </span>
+                        <span class="leading-snug">${optText}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 text-indigo-400 transition-opacity"></i>
+                `;
+
+                btn.onclick = () => handleAnswerSelect(optText === correctAnswerText, optText, correctAnswerText);
+                optionsGrid.appendChild(btn);
+            });
+
+            // Start Precise High-Performance Reaction Timer
+            elapsedMs = 0;
+            document.getElementById('timerDisplay').textContent = "0 ms";
+            startTime = performance.now();
+
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                elapsedMs = Math.floor(performance.now() - startTime);
+                document.getElementById('timerDisplay').textContent = `${elapsedMs} ms`;
+            }, 10);
+        }
+
+        function handleAnswerSelect(isCorrect, selectedText, correctText) {
+            clearInterval(timerInterval);
+            const reactionTime = Math.floor(performance.now() - startTime);
+            totalReactionTime += reactionTime;
+
+            let pointsEarned = 0;
+            let levelChangeMessage = "";
+
+            if (isCorrect) {
+                correctCount++;
+                streak++;
+                if (streak > maxStreak) maxStreak = streak;
+
+                if (reactionTime < 800) {
+                    pointsEarned = 20;
+                } else if (reactionTime <= 1500) {
+                    pointsEarned = 12;
+                } else {
+                    pointsEarned = 6;
+                }
+
+                score += pointsEarned;
+
+                if (streak >= 3) {
+                    playSound('streak');
+                } else {
+                    playSound('correct');
+                }
+
+                // INVERSE ADAPTIVE DIFFICULTY LOGIC:
+                // Fast reaction & correct answer -> Lower level (Make next question easier: down towards L1)
+                if (reactionTime < 1200 && currentLevel > 1) {
+                    currentLevel--;
+                    levelChangeMessage = "⚡ Cepat & Betul! Level diturunkan (Soalan lebih mudah!)";
+                } else {
+                    levelChangeMessage = "Kekal pada level semasa.";
+                }
+
+            } else {
+                wrongCount++;
+                streak = 0;
+                pointsEarned = -10;
+                score = Math.max(0, score + pointsEarned);
+                playSound('wrong');
+
+                // INVERSE ADAPTIVE DIFFICULTY LOGIC:
+                // Wrong answer / Slow -> Increase level (Make next question harder: up towards L5)
+                if (currentLevel < 5) {
+                    currentLevel++;
+                    levelChangeMessage = "❌ Salah / Lambat! Level dinaikkan (Soalan lebih mencabar!)";
+                } else {
+                    levelChangeMessage = "Kekal di Level 5 (Mencabar).";
+                }
+            }
+
+            if (currentLevel > highestLevelReached) {
+                highestLevelReached = currentLevel;
+            }
+
+            roundQuestions[currentQuestionIndex].userResult = {
+                isCorrect: isCorrect,
+                reactionTime: reactionTime,
+                points: pointsEarned,
+                selectedText: selectedText,
+                correctText: correctText
+            };
+
+            showFeedbackModal(isCorrect, pointsEarned, reactionTime, levelChangeMessage, currentQuestion.explanation);
+        }
+
+        function showFeedbackModal(isCorrect, points, timeMs, adaptiveText, explanation) {
+            const modal = document.getElementById('feedbackModal');
+            const iconContainer = document.getElementById('feedbackIconContainer');
+            const icon = document.getElementById('feedbackIcon');
+            const title = document.getElementById('feedbackTitle');
+            const subtitle = document.getElementById('feedbackSubtitle');
+
+            if (isCorrect) {
+                iconContainer.className = "w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl mb-4 shadow-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40";
+                icon.className = "fa-solid fa-check";
+                title.className = "text-3xl font-black text-emerald-400";
+                title.textContent = "BETUL! 🎉";
+                subtitle.className = "text-sm font-bold text-emerald-300 mb-4";
+                subtitle.textContent = `+${points} Markah`;
+            } else {
+                iconContainer.className = "w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl mb-4 shadow-xl bg-rose-500/20 text-rose-400 border border-rose-500/40";
+                icon.className = "fa-solid fa-xmark";
+                title.className = "text-3xl font-black text-rose-400";
+                title.textContent = "SALAH ❌";
+                subtitle.className = "text-sm font-bold text-rose-300 mb-4";
+                subtitle.textContent = `-10 Markah (Penalti)`;
+            }
+
+            document.getElementById('feedbackTime').textContent = `${timeMs} ms`;
+            document.getElementById('feedbackAdaptiveShift').textContent = adaptiveText;
+            document.getElementById('feedbackExplanation').textContent = explanation;
+
+            modal.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            document.getElementById('feedbackModal').classList.add('hidden');
+            currentQuestionIndex++;
+            loadNextQuestion();
+        }
+
+        function endGame() {
+            playSound('fanfare');
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('gameOverScreen').classList.remove('hidden');
+
+            const avgTime = roundQuestions.length > 0 ? Math.round(totalReactionTime / roundQuestions.length) : 0;
+
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('finalAvgTime').textContent = `${avgTime} ms`;
+            document.getElementById('finalAccuracy').textContent = `${correctCount} / ${wrongCount}`;
+            document.getElementById('finalBestStreak').textContent = `${maxStreak} 🔥`;
+
+            // High Score Storage Update
+            const savedTopScore = parseInt(localStorage.getItem('kssm_reaction_topscore') || '0', 10);
+            if (score > savedTopScore) {
+                localStorage.setItem('kssm_reaction_topscore', score.toString());
+                document.getElementById('topScoreDisplay').textContent = score;
+            }
+
+            const levelNames = ['Level 1 (Mudah)', 'Level 2 (Sederhana)', 'Level 3 (Pertengahan)', 'Level 4 (Mencabar)', 'Level 5 (Sangat Mencabar)'];
+            document.getElementById('finalHighestLevel').textContent = levelNames[highestLevelReached - 1];
+
+            const perfTag = document.getElementById('performanceTag');
+            if (avgTime < 1000 && correctCount >= 8) {
+                perfTag.textContent = "⚡ \"Refleks Kilat Genius! Pantas & Tepat Sekali!\"";
+                perfTag.className = "text-sm font-black text-emerald-400 mb-6";
+            } else if (correctCount >= 7) {
+                perfTag.textContent = "🎯 \"Pencakap Hebat! Penguasaan KSSM Sangat Baik!\"";
+                perfTag.className = "text-sm font-black text-blue-400 mb-6";
+            } else if (avgTime < 1200) {
+                perfTag.textContent = "🏎️ \"Reaksi Laju! Tingkatkan Ketepatan Jawapan.\"";
+                perfTag.className = "text-sm font-black text-amber-400 mb-6";
+            } else {
+                perfTag.textContent = "📚 \"Latihan Diperlukan! Teruskan Berusaha.\"";
+                perfTag.className = "text-sm font-black text-pink-400 mb-6";
+            }
+
+            // Populate Review List
+            const reviewList = document.getElementById('reviewList');
+            reviewList.innerHTML = '';
+
+            roundQuestions.forEach((q, idx) => {
+                const res = q.userResult;
+                const item = document.createElement('div');
+                item.className = `p-3 rounded-xl border text-xs ${res.isCorrect ? 'bg-emerald-950/30 border-emerald-800/50' : 'bg-rose-950/30 border-rose-800/50'}`;
+                
+                item.innerHTML = `
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="font-bold ${res.isCorrect ? 'text-emerald-400' : 'text-rose-400'}">
+                            Soalan ${idx + 1}: ${res.isCorrect ? 'BETUL ✓' : 'SALAH ✗'} (${res.reactionTime} ms)
+                        </span>
+                        <span class="text-[10px] text-slate-400 font-mono">Lvl ${q.level} • ${q.topic}</span>
+                    </div>
+                    <p class="text-slate-200 font-medium mb-1">${q.question}</p>
+                    <p class="text-[11px] text-slate-400">Jawapan Betul: <strong class="text-white">${res.correctText}</strong></p>
+                `;
+                reviewList.appendChild(item);
+            });
+        }
+
+        function restartGame() {
+            playSound('tick');
+            document.getElementById('gameOverScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
